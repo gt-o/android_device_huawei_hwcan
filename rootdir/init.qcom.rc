@@ -28,7 +28,6 @@
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.target.rc
-import /vendor/etc/init/hw/init.qcom.factory.rc
 import /vendor/etc/init/hw/init.qcom.test.rc
 import /vendor/etc/init/hw/init.huawei.rc
 
@@ -487,9 +486,6 @@ on post-fs-data
     # set aggressive read ahead for dm-0 and dm-1 during boot up
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
-
-    #Create FTM_AP dir for factory test
-    mkdir /data/FTM_AP 0775 system system
     
     # Create log dir to collect logs.
     mkdir /data/log 0751 system system
@@ -512,11 +508,6 @@ service iop /system/vendor/bin/iop
     disabled
     socket iop seqpacket 0666 root system
     writepid /dev/cpuset/system-background/tasks
-
-service qcomsysd /system/bin/qcom-system-daemon
-    class main
-    user root
-    group root qcom_diag
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
@@ -620,7 +611,7 @@ service btsnoop /system/bin/btsnoop
 
 service port-bridge /system/bin/port-bridge
     class main
-    user radio system
+    user radio
     group radio system inet
     disabled
     oneshot
@@ -747,13 +738,6 @@ on charger
     setprop persist.sys.usb.config mass_storage
     load_system_props
     start qcom-post-boot
-
-# Huawei
-
-#factory mode need can be rewrite this file for smartpa calib
-on property:ro.runmode=factory && property:sys.boot_completed=1
-    chown media audio /persist/audio/speaker_calibdata.bin
-    chown media audio /dev/tfa98xx_calibrate
 
 on property:init.svc.surfaceflinger=restarting
     stop hwcomposer-2-1

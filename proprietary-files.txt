@@ -953,6 +953,7 @@ vendor/lib64/vendor.qti.hardware.alarm@1.0.so|583a062f31e325321e5efce79add7422dc
 #-lib/libqmi_oem_api.so
 #lib64/libqmi_nv_api.so
 #-lib64/libqmi_oem_api.so
+bin/imsqmidaemon:vendor/bin/imsqmidaemon
 etc/permissions/qti_libpermissions.xml|ef3c88495f2f61a2d16e1445113a9d80f8db0e0a
 etc/permissions/qti_permissions.xml|e6ff4572352b1a4f91b6b9d7cbb1cad9924410a0
 lib/libdiag_system.so|f207e0075be87f67ecd7c0c629cb542212884e28
